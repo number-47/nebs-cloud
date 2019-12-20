@@ -1,0 +1,18 @@
+server:
+  port: 8401
+
+spring:
+  application:
+    name: NEBS-MONITOR-ADMIN
+  security:
+    user:
+      name: nebs
+      password: 123456
+  boot:
+    admin:
+      ui:
+        title: ${spring.application.name}
+      instance:
+        prefer-ip: true
+        service-url: http://localhost:8401
+

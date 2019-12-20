@@ -1,0 +1,46 @@
+server:
+  port: 8001
+  servlet:
+    context-path: /register
+
+spring:
+  application:
+    name: NEBS-REGISTER
+  security:
+    user:
+      name: nebs
+      password: 123456
+  autoconfigure:
+    exclude: org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+  boot:
+    admin:
+      client:
+        url: http://localhost:8401
+        username: nebs
+        password: 123456
+      instance:
+        prefer-ip: true
+        service-url: http://localhost:8001
+info:
+  app:
+    name: ${spring.application.name}
+    description: "@project.description@"
+    version: "@project.version@"
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*' #将Spring Boot Admin客户端的所有监控端点都暴露给Spring Boot Admin服务端；
+  endpoint:
+    health:
+      show-details: ALWAYS #总是展示详细的健康信息
+
+eureka:
+  instance:
+    hostname: localhost #指定了Eureka服务端的地址
+  client:
+    register-with-eureka: false #表示是否将服务注册到Eureka服务端，由于我们这里是单节点的Eureka服务端，所以这里指定false；
+    fetch-registry: false       #表示是否从Eureka服务端获取服务信息，因为这里是单节点的Eureka服务端，并不需要从别的Eureka服务端同步服务信息
+    instance-info-replication-interval-seconds: 30 #微服务更新实例信息的变化到Eureka服务端的间隔时间，单位为秒，这里指定为30秒（这就是微服务启动后，要过一会才能注册到Eureka服务端的原因）
+    serviceUrl:
+      defaultZone: http://${spring.security.user.name}:${spring.security.user.password}@${eureka.instance.hostname}:${server.port}${server.servlet.context-path}/eureka/
