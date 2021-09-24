@@ -1,8 +1,8 @@
 package interceptor;
 
 import com.alibaba.fastjson.JSONObject;
-import entity.NebsConstant;
 import entity.NebsResponse;
+import entity.constant.NebsConstant;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.MediaType;
 import org.springframework.util.Base64Utils;
@@ -22,8 +22,8 @@ public class NebsServerProtectInterceptor implements HandlerInterceptor {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws IOException {
 		// 从请求头中获取 Zuul Token
-		String token = request.getHeader(NebsConstant.ZUUL_TOKEN_HEADER);
-		String zuulToken = new String(Base64Utils.encode(NebsConstant.ZUUL_TOKEN_VALUE.getBytes()));
+		String token = request.getHeader(NebsConstant.GATEWAY_TOKEN_VALUE);
+		String zuulToken = new String(Base64Utils.encode(NebsConstant.GATEWAY_TOKEN_HEADER.getBytes()));
 		// 校验 Zuul Token的正确性
 		if (StringUtils.equals(zuulToken, token)) {
 			return true;

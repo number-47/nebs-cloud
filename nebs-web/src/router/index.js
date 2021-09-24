@@ -160,11 +160,7 @@ function filterAsyncRouter(routes) {
 }
 
 function view(path) {
-  return function(resolve) {
-    import(`@/views/${path}.vue`).then(mod => {
-      resolve(mod)
-    })
-  }
+  return (resolve) => require([`@/views/${path}.vue`], resolve)
 }
 
 export default router

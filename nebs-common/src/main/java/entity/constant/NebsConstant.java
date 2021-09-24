@@ -1,11 +1,11 @@
-package cc.mrbird.febs.common.entity.constant;
+package entity.constant;
 
 /**
  * FEBS系统常量类
  *
  * @author MrBird
  */
-public class FebsConstant {
+public class NebsConstant {
 
     /**
      * 排序规则：降序
@@ -23,7 +23,7 @@ public class FebsConstant {
     /**
      * Gateway请求头TOKEN值
      */
-    public static final String GATEWAY_TOKEN_VALUE = "febs:gateway:123456";
+    public static final String GATEWAY_TOKEN_VALUE = "nebsGateway123456";
 
     /**
      * 允许下载的文件类型，根据需求自己添加（小写）
@@ -33,12 +33,12 @@ public class FebsConstant {
     /**
      * 验证码 key前缀
      */
-    public static final String CODE_PREFIX = "febs.captcha.";
+    public static final String CODE_PREFIX = "nebs.captcha.";
 
     /**
      * 异步线程池名称
      */
-    public static final String ASYNC_POOL = "febsAsyncThreadPool";
+    public static final String ASYNC_POOL = "nebsAsyncThreadPool";
 
     /**
      * OAUTH2 令牌类型 https://oauth.net/2/bearer-tokens/
@@ -57,4 +57,11 @@ public class FebsConstant {
      */
     public static final Long REGISTER_ROLE_ID = 2L;
 
+    /**
+     * 令牌存储策略 InMemoryTokenStore,JdbcTokenStore,JwtTokenStore,RedisTokenStore
+     */
+    public static final String IN_MEMORY_TOKEN_STORE = "InMemoryTokenStore";
+    public static final String JDBC_TOKEN_STORE = "JdbcTokenStore";
+    public static final String JWT_TOKEN_STORE = "JwtTokenStore";
+    public static final String REDIS_TOKEN_STORE = "RedisTokenStore";
 }

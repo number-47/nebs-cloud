@@ -1,12 +1,12 @@
-package cc.mrbird.febs.common.entity.system;
+package entity.system;
 
 
-import cc.mrbird.febs.common.utils.DateUtil;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
+import util.DateUtil;
 
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;

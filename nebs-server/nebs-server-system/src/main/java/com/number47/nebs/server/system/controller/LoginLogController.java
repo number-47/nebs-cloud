@@ -3,7 +3,7 @@ package com.number47.nebs.server.system.controller;
 
 import annotation.ControllerEndpoint;
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
-import com.number47.nebs.server.system.server.ILoginLogService;
+import com.number47.nebs.server.system.service.ILoginLogService;
 import com.wuwenze.poi.ExcelKit;
 import entity.NebsResponse;
 import entity.QueryRequest;

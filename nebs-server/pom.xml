@@ -12,6 +12,7 @@
     <modules>
         <module>nebs-server-system</module>
         <module>nebs-server-test</module>
+        <module>nebs-server-generator</module>
     </modules>
 
     <modelVersion>4.0.0</modelVersion>

@@ -3,10 +3,12 @@ package com.number47.nebs.auth.controller;
 import com.number47.nebs.auth.exception.NebsAuthException;
 import com.number47.nebs.auth.service.ValidateCodeService;
 import entity.NebsResponse;
+import entity.constant.StringConstant;
 import exception.ValidateCodeException;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.provider.token.ConsumerTokenServices;
+import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,6 +28,8 @@ public class SecurityController {
 
 	@Autowired
 	private ConsumerTokenServices consumerTokenServices;
+	@Autowired
+	private TokenStore tokenStore;
 
 	@Autowired
 	private ValidateCodeService validateCodeService;
@@ -48,7 +52,7 @@ public class SecurityController {
 	@DeleteMapping("signout")
 	public NebsResponse signout(HttpServletRequest request) throws NebsAuthException {
 		String authorization = request.getHeader("Authorization");
-		String token = StringUtils.replace(authorization, "bearer ", "");
+		String token = StringUtils.replace(authorization, "bearer ", StringConstant.EMPTY);
 		NebsResponse nebsResponse = new NebsResponse();
 		if (!consumerTokenServices.revokeToken(token)) {
 			throw new NebsAuthException("退出登录失败");

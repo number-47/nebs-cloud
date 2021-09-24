@@ -14,5 +14,5 @@ spring:
         title: ${spring.application.name}
       instance:
         prefer-ip: true
-        service-url: http://localhost:8401
+        service-url: http://${nebs-monitor-admin}:8401
 

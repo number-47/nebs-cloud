@@ -14,6 +14,7 @@
         <module>../nebs-register</module>
         <module>../nebs-auth</module>
         <module>../nebs-gateway</module>
+        <module>../nebs-spring-gateway</module>
         <module>../nebs-server</module>
         <module>../nebs-monitor</module>
     </modules>

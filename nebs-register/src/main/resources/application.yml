@@ -11,16 +11,17 @@ spring:
       name: nebs
       password: 123456
   autoconfigure:
-    exclude: org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+    exclude: org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration,
+                   org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration
   boot:
     admin:
       client:
-        url: http://localhost:8401
+        url: http://${nebs-monitor-admin}:8401
         username: nebs
         password: 123456
       instance:
         prefer-ip: true
-        service-url: http://localhost:8001
+        service-url: http://${nebs-register}:8001
 info:
   app:
     name: ${spring.application.name}
@@ -37,7 +38,7 @@ management:
 
 eureka:
   instance:
-    hostname: localhost #指定了Eureka服务端的地址
+    hostname: ${nebs-register} #指定了Eureka服务端的地址
   client:
     register-with-eureka: false #表示是否将服务注册到Eureka服务端，由于我们这里是单节点的Eureka服务端，所以这里指定false；
     fetch-registry: false       #表示是否从Eureka服务端获取服务信息，因为这里是单节点的Eureka服务端，并不需要从别的Eureka服务端同步服务信息

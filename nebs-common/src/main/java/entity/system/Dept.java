@@ -1,12 +1,12 @@
-package cc.mrbird.febs.common.entity.system;
+package entity.system;
 
-import cc.mrbird.febs.common.converter.TimeConverter;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.wuwenze.poi.annotation.Excel;
 import com.wuwenze.poi.annotation.ExcelField;
+import converter.TimeConverter;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;

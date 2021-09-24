@@ -1,4 +1,4 @@
-package cc.mrbird.febs.common.entity.constant;
+package entity.constant;
 
 /**
  * 图片类型常量类

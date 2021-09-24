@@ -1,4 +1,4 @@
-package cc.mrbird.febs.common.entity.system;
+package entity.system;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.wuwenze.poi.annotation.Excel;

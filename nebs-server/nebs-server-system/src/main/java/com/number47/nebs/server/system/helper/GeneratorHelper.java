@@ -1,22 +1,26 @@
-package cc.mrbird.febs.server.system.helper;
+package com.number47.nebs.server.system.helper;
 
-import cc.mrbird.febs.common.annotation.Helper;
-import cc.mrbird.febs.common.entity.constant.FebsConstant;
-import cc.mrbird.febs.common.entity.system.Column;
-import cc.mrbird.febs.common.entity.system.GeneratorConfig;
-import cc.mrbird.febs.common.entity.constant.GeneratorConstant;
-import cc.mrbird.febs.common.utils.FebsUtil;
-import cc.mrbird.febs.server.system.utils.AddressUtil;
 import com.alibaba.fastjson.JSONObject;
 import com.google.common.io.Files;
+import com.number47.nebs.common.annotation.Helper;
+import com.number47.nebs.common.entity.constant.GeneratorConstant;
+import entity.system.Column;
+import com.number47.nebs.server.system.util.AddressUtil;
+import entity.constant.NebsConstant;
+import entity.system.GeneratorConfig;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateExceptionHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
+import util.NebsUtil;
 
-import java.io.*;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Objects;
@@ -39,7 +43,7 @@ public class GeneratorHelper {
         data.put("hasDate", false);
         data.put("hasBigDecimal", false);
         columns.forEach(c -> {
-            c.setField(FebsUtil.underscoreToCamel(StringUtils.lowerCase(c.getName())));
+            c.setField(NebsUtil.underscoreToCamel(StringUtils.lowerCase(c.getName())));
             if (StringUtils.containsAny(c.getType(), "date", "datetime", "timestamp")) {
                 data.put("hasDate", true);
             }
@@ -89,7 +93,7 @@ public class GeneratorHelper {
         String templateName = GeneratorConstant.MAPPERXML_TEMPLATE;
         File mapperXmlFile = new File(path);
         JSONObject data = toJSONObject(configure);
-        columns.forEach(c -> c.setField(FebsUtil.underscoreToCamel(StringUtils.lowerCase(c.getName()))));
+        columns.forEach(c -> c.setField(NebsUtil.underscoreToCamel(StringUtils.lowerCase(c.getName()))));
         data.put("columns", columns);
         generateFileByTemplate(templateName, mapperXmlFile, data);
     }
@@ -131,12 +135,12 @@ public class GeneratorHelper {
         String templatePath = GeneratorHelper.class.getResource("/generator/templates/").getPath();
         File file = new File(templatePath);
         if (!file.exists()) {
-            templatePath = System.getProperties().getProperty(FebsConstant.JAVA_TEMP_DIR);
+            templatePath = System.getProperties().getProperty(NebsConstant.JAVA_TEMP_DIR);
             file = new File(templatePath + File.separator + templateName);
             FileUtils.copyInputStreamToFile(Objects.requireNonNull(AddressUtil.class.getClassLoader().getResourceAsStream("classpath:generator/templates/" + templateName)), file);
         }
         configuration.setDirectoryForTemplateLoading(new File(templatePath));
-        configuration.setDefaultEncoding(FebsConstant.UTF8);
+        configuration.setDefaultEncoding(NebsConstant.UTF8);
         configuration.setTemplateExceptionHandler(TemplateExceptionHandler.IGNORE_HANDLER);
         return configuration.getTemplate(templateName);
 

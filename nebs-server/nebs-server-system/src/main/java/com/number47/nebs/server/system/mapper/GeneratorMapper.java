@@ -1,8 +1,8 @@
-package cc.mrbird.febs.server.system.mapper;
+package com.number47.nebs.server.system.mapper;
 
 
-import cc.mrbird.febs.common.entity.system.Column;
-import cc.mrbird.febs.common.entity.system.Table;
+import entity.system.Column;
+import entity.system.Table;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.apache.ibatis.annotations.Param;

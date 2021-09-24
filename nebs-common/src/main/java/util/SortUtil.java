@@ -3,8 +3,8 @@ package util;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import entity.NebsConstant;
 import entity.QueryRequest;
+import entity.constant.NebsConstant;
 import org.apache.commons.lang3.StringUtils;
 
 /**

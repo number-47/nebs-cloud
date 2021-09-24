@@ -43,7 +43,6 @@
         <el-input
           ref="code"
           v-model="loginForm.code"
-          prefix-icon="el-icon-lock"
           :placeholder="$t('login.code')"
           name="code"
           type="text"
@@ -52,7 +51,7 @@
           @keyup.enter.native="handleLogin"
         />
       </el-form-item>
-      <img :src="imageCode" alt="codeImage" class="code-image" @click="getCodeImage" />
+      <img :src="imageCode" alt="codeImage" class="code-image" @click="getCodeImage">
 
       <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">{{
         $t('login.logIn')

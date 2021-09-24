@@ -4,6 +4,8 @@ server:
 spring:
   application:
     name: NEBS-SERVER-SYSTEM
+  autoconfigure:
+    exclude: org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration
   datasource:
     dynamic:
       p6spy: true
@@ -20,16 +22,16 @@ spring:
           username: root
           password: root
           driver-class-name: com.mysql.cj.jdbc.Driver
-          url: jdbc:mysql://localhost:3306/nebs_cloud_base?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=GMT%2b8
+          url: jdbc:mysql://${mysql.url}:3306/nebs_cloud_base?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=GMT%2b8
   boot:
     admin:
       client:
-        url: http://localhost:8401
+        url: http://${nebs-monitor-admin}:8401
         username: nebs
         password: 123456
       instance:
         prefer-ip: true
-        service-url: http://localhost:8201
+        service-url: http://${nebs-server-system}:8201
   zipkin:
     sender:
       type: rabbit
@@ -37,7 +39,7 @@ spring:
     sampler:
       probability: 1
   rabbitmq:
-    host: localhost
+    host: ${rabbitmq.url}
     port: 5672
     username: nebs
     password: 123456
@@ -58,7 +60,7 @@ security:
   oauth2:
     resource:
       id: ${spring.application.name}
-      user-info-uri: http://localhost:8301/auth/user  #1.到认证服务器里校验当前请求头中的令牌是否为合法的令牌；
+      user-info-uri: http://${nebs-gateway}:8301/auth/user  #1.到认证服务器里校验当前请求头中的令牌是否为合法的令牌；
                                                       #2.通过当前令牌获取对应的用户信息。
 
 eureka:
@@ -69,10 +71,10 @@ eureka:
     fetch-registry: true
     instance-info-replication-interval-seconds: 30
     serviceUrl:
-      defaultZone: http://nebs:123456@localhost:8001/register/eureka/
+      defaultZone: http://nebs:123456@${nebs-register}:8001/register/eureka/
 
 mybatis-plus:
-  type-aliases-package: com.number47.nebs.common.entity.system
+  type-aliases-package: entity.system
   mapper-locations: classpath:mapper/*/*.xml
   configuration:
     jdbc-type-for-null: null

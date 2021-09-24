@@ -1,6 +1,6 @@
-package cc.mrbird.febs.server.system.mapper;
+package com.number47.nebs.server.system.mapper;
 
-import cc.mrbird.febs.common.entity.system.RoleMenu;
+import entity.system.RoleMenu;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 public interface RoleMenuMapper extends BaseMapper<RoleMenu> {

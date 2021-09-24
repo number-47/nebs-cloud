@@ -1,7 +1,6 @@
 package com.number47.nebs.auth.properties;
 
 import com.number47.nebs.auth.entity.NebsClientsProperties;
-import com.number47.nebs.auth.properties.NebsValidateCodeProperties;
 import lombok.Data;
 import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -32,4 +31,7 @@ public class NebsAuthProperties {
 	private NebsValidateCodeProperties code = new NebsValidateCodeProperties();
 	// 免认证路径
 	private String anonUrl;
+
+	// 令牌存储方式
+	private String tokenStoreType;
 }

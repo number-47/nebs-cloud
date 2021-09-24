@@ -1,6 +1,6 @@
 package configure;
 
-import entity.NebsConstant;
+import entity.constant.NebsConstant;
 import feign.RequestInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpHeaders;
@@ -16,16 +16,17 @@ import org.springframework.util.Base64Utils;
 public class NebsOAuth2FeignConfigure {
 
 	/**
-	 * 通过SecurityContextHolder从请求上下文中获取了OAuth2AuthenticationDetails类型对象,取到了请求令牌，然后在请求模板对象requestTemplate的头部手动将令牌添加上去
+	 * 通过SecurityContextHolder从请求上下文中获取了OAuth2AuthenticationDetails类型对象,取到了请求令牌，
+	 * 然后在请求模板对象requestTemplate的头部手动将令牌添加上去
 	 * 拦截Feign请求，手动往请求头上加入令牌即可
 	 * @return
 	 */
 	@Bean
 	public RequestInterceptor oauth2FeignRequestInterceptor() {
 		return requestTemplate -> {
-			// 添加 Zuul Token
-			String zuulToken = new String(Base64Utils.encode(NebsConstant.ZUUL_TOKEN_VALUE.getBytes()));
-			requestTemplate.header(NebsConstant.ZUUL_TOKEN_HEADER, zuulToken);
+			// 添加  TokenHeader
+			String tokenHeader = new String(Base64Utils.encode(NebsConstant.GATEWAY_TOKEN_HEADER.getBytes()));
+			requestTemplate.header(NebsConstant.GATEWAY_TOKEN_VALUE, tokenHeader);
 
 			Object details = SecurityContextHolder.getContext().getAuthentication().getDetails();
 			if (details instanceof OAuth2AuthenticationDetails) {

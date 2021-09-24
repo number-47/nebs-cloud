@@ -1,12 +1,10 @@
 package com.number47.nebs.server.test.service;
 
 import com.number47.nebs.server.test.fallback.HelloServiceFallback;
-import entity.NebsServerConstant;
+import entity.constant.NebsServerConstant;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import java.security.Principal;
 
 /**
  * @author number47

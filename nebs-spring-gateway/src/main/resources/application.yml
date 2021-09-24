@@ -1,0 +1,61 @@
+server:
+  port: 8301
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  application:
+    name: NEBS-SPRING-GATEWAY
+  cloud: ## 路由规则
+    gateway:
+      routes:
+        - id: NEBS-AUTH
+          uri: lb://NEBS-AUTH
+          predicates:
+            - Path=/auth/**
+        - id: NEBS-SERVER-SYSTEM
+          uri: lb://NEBS-SERVER-SYSTEM
+          predicates:
+            - Path=/system/**
+        - id: NEBS-SERVER-TEST
+          uri: lb://NEBS-SERVER-TEST #uri配置为lb://NEBS-Server-Test的含义是，满足转发条件后，请求将均衡的转发到NEBS-Server-Test微服务上
+          predicates:
+            - Path=/test/** #请求Path以/auth开头的都会被匹配
+      default-filters:
+        - StripPrefix=0 #请求转发前，将Path的内容截去前面一位,比如/auth/hello会被截取为/hello
+  boot:
+    admin:
+      client:
+        url: http://${nebs-monitor-admin}:8401
+        username: nebs
+        password: 123456
+
+eureka:
+  instance:
+    lease-renewal-interval-in-seconds: 20
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    instance-info-replication-interval-seconds: 30
+    registry-fetch-interval-seconds: 3
+    serviceUrl:
+      defaultZone: http://nebs:123456@${nebs-register}:8001/register/eureka/
+
+management:
+  endpoint:
+    health:
+      show-details: ALWAYS
+  endpoints:
+    web:
+      exposure:
+        include: health,info,gateway
+logging:
+  level:
+    org:
+      springframework:
+        boot:
+          actuate:
+            endpoint:
+              EndpointId: debug
+        data:
+          convert:
+            CustomConversions: debug

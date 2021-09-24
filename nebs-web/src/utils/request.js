@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import axios from 'axios'
 import { Message } from 'element-ui'
 import { authorizationValue } from '@/settings'
@@ -162,6 +163,7 @@ const request = {
     } else {
       _params = '?'
       for (const key in params) {
+        // eslint-disable-next-line no-prototype-builtins
         if (params.hasOwnProperty(key) && params[key] !== null) {
           _params += `${key}=${params[key]}&`
         }
@@ -176,6 +178,7 @@ const request = {
     } else {
       _params = '?'
       for (const key in params) {
+        // eslint-disable-next-line no-prototype-builtins
         if (params.hasOwnProperty(key) && params[key] !== null) {
           _params += `${key}=${params[key]}&`
         }

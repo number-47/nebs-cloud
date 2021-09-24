@@ -2,7 +2,7 @@ package com.number47.nebs.server.system.controller;
 
 import annotation.ControllerEndpoint;
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
-import com.number47.nebs.server.system.server.IMenuService;
+import com.number47.nebs.server.system.service.IMenuService;
 import com.wuwenze.poi.ExcelKit;
 import entity.NebsResponse;
 import entity.router.VueRouter;

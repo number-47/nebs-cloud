@@ -1,4 +1,4 @@
-package cc.mrbird.febs.common.annotation;
+package com.number47.nebs.common.annotation;
 
 import org.springframework.core.annotation.AliasFor;
 import org.springframework.stereotype.Component;

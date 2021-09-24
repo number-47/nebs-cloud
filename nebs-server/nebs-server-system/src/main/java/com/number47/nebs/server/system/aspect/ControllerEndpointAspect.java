@@ -1,10 +1,9 @@
-package cc.mrbird.febs.server.system.aspect;
+package com.number47.nebs.server.system.aspect;
 
-import cc.mrbird.febs.common.annotation.ControllerEndpoint;
-import cc.mrbird.febs.common.exception.FebsException;
-import cc.mrbird.febs.common.utils.FebsUtil;
-import cc.mrbird.febs.common.utils.HttpContextUtil;
-import cc.mrbird.febs.server.system.service.ILogService;
+
+import annotation.ControllerEndpoint;
+import com.number47.nebs.server.system.service.ILogService;
+import exception.NebsException;
 import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -14,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
+import util.HttpContextUtil;
+import util.NebsUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
@@ -28,12 +29,12 @@ public class ControllerEndpointAspect extends AspectSupport {
     @Autowired
     private ILogService logService;
 
-    @Pointcut("@annotation(cc.mrbird.febs.common.annotation.ControllerEndpoint)")
+    @Pointcut("@annotation(annotation.ControllerEndpoint)")
     public void pointcut() {
     }
 
     @Around("pointcut()")
-    public Object around(ProceedingJoinPoint point) throws FebsException {
+    public Object around(ProceedingJoinPoint point) throws NebsException {
         Object result;
         Method targetMethod = resolveMethod(point);
         ControllerEndpoint annotation = targetMethod.getAnnotation(ControllerEndpoint.class);
@@ -51,8 +52,8 @@ public class ControllerEndpointAspect extends AspectSupport {
         } catch (Throwable throwable) {
             String exceptionMessage = annotation.exceptionMessage();
             String message = throwable.getMessage();
-            String error = FebsUtil.containChinese(message) ? exceptionMessage + "，" + message : exceptionMessage;
-            throw new FebsException(error);
+            String error = NebsUtil.containChinese(message) ? exceptionMessage + "，" + message : exceptionMessage;
+            throw new NebsException(error);
         }
     }
 }

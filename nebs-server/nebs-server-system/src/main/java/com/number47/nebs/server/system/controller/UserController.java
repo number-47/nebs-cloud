@@ -2,23 +2,33 @@ package com.number47.nebs.server.system.controller;
 
 import annotation.ControllerEndpoint;
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
-import com.number47.nebs.server.system.server.ILoginLogService;
-import com.number47.nebs.server.system.server.IUserService;
+import com.number47.nebs.server.system.service.ILoginLogService;
+import com.number47.nebs.server.system.service.IUserService;
+import com.wuwenze.poi.ExcelKit;
 import entity.NebsResponse;
 import entity.QueryRequest;
+import entity.constant.StringConstant;
 import entity.system.LoginLog;
+import entity.system.SystemUser;
 import exception.NebsException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
-import entity.system.SystemUser;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import util.NebsUtil;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -93,5 +103,27 @@ public class UserController {
 			log.error(message, e);
 			throw new NebsException(message);
 		}
+	}
+
+	@GetMapping("check/{username}")
+	@ControllerEndpoint(operation = "检查用户名", exceptionMessage = "检查用户名")
+	public boolean checkUserName(@NotBlank(message = "{required}") @PathVariable String username) {
+		return this.userService.findByName(username) == null;
+	}
+
+	@PostMapping("excel")
+	@PreAuthorize("hasAuthority('user:export')")
+	@ControllerEndpoint(operation = "导出用户数据", exceptionMessage = "导出Excel失败")
+	public void export(QueryRequest queryRequest, SystemUser user, HttpServletResponse response) {
+		List<SystemUser> users = this.userService.findUserDetailList(user, queryRequest).getRecords();
+		ExcelKit.$Export(SystemUser.class, response).downXlsx(users, false);
+	}
+
+	@PutMapping("password/reset")
+	@PreAuthorize("hasAuthority('user:reset')")
+	@ControllerEndpoint(exceptionMessage = "重置用户密码失败")
+	public void resetPassword(@NotBlank(message = "{required}") String usernames) {
+		String[] usernameArr = usernames.split(StringConstant.COMMA);
+		this.userService.resetPassword(usernameArr);
 	}
 }

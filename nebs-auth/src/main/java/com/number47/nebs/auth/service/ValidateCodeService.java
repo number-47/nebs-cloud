@@ -2,10 +2,11 @@ package com.number47.nebs.auth.service;
 
 import com.number47.nebs.auth.properties.NebsAuthProperties;
 import com.number47.nebs.auth.properties.NebsValidateCodeProperties;
-import com.wf.captcha.Captcha;
 import com.wf.captcha.GifCaptcha;
 import com.wf.captcha.SpecCaptcha;
-import entity.NebsConstant;
+import com.wf.captcha.base.Captcha;
+import entity.constant.ImageTypeConstant;
+import entity.constant.NebsConstant;
 import exception.ValidateCodeException;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,7 +59,10 @@ public class ValidateCodeService {
 	 */
 	public void check(String key, String value) throws ValidateCodeException {
 		Object codeInRedis = redisService.get(NebsConstant.CODE_PREFIX + key);
-		codeInRedis = "0000";
+		// 如果nebs-auth.properties配置了useDefaultCode=true,使用默认验证码
+		if (properties.getCode().getUseDefaultCode()){
+			codeInRedis = properties.getCode().getDefaultCode();
+		}
 		if (StringUtils.isBlank(value)) {
 			throw new ValidateCodeException("请输入验证码");
 		}
@@ -72,7 +76,7 @@ public class ValidateCodeService {
 
 	private Captcha createCaptcha(NebsValidateCodeProperties code) {
 		Captcha captcha = null;
-		if (StringUtils.equalsIgnoreCase(code.getType(), NebsConstant.GIF)) {
+		if (StringUtils.equalsIgnoreCase(code.getType(), ImageTypeConstant.GIF)) {
 			captcha = new GifCaptcha(code.getWidth(), code.getHeight(), code.getLength());
 		} else {
 			captcha = new SpecCaptcha(code.getWidth(), code.getHeight(), code.getLength());
@@ -82,7 +86,7 @@ public class ValidateCodeService {
 	}
 
 	private void setHeader(HttpServletResponse response, String type) {
-		if (StringUtils.equalsIgnoreCase(type, NebsConstant.GIF)) {
+		if (StringUtils.equalsIgnoreCase(type, ImageTypeConstant.GIF)) {
 			response.setContentType(MediaType.IMAGE_GIF_VALUE);
 		} else {
 			response.setContentType(MediaType.IMAGE_PNG_VALUE);

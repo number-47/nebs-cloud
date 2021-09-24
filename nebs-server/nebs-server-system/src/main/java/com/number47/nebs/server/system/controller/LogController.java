@@ -1,18 +1,23 @@
-package cc.mrbird.febs.server.system.controller;
+package com.number47.nebs.server.system.controller;
 
-import cc.mrbird.febs.common.annotation.ControllerEndpoint;
-import cc.mrbird.febs.common.entity.FebsResponse;
-import cc.mrbird.febs.common.entity.QueryRequest;
-import cc.mrbird.febs.common.entity.system.Log;
-import cc.mrbird.febs.common.exception.FebsException;
-import cc.mrbird.febs.common.utils.FebsUtil;
-import cc.mrbird.febs.server.system.service.ILogService;
+
+import annotation.ControllerEndpoint;
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
+import com.number47.nebs.server.system.service.ILogService;
 import com.wuwenze.poi.ExcelKit;
+import entity.NebsResponse;
+import entity.QueryRequest;
+import entity.system.Log;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import util.NebsUtil;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.constraints.NotBlank;
@@ -31,9 +36,9 @@ public class LogController {
     private ILogService logService;
 
     @GetMapping
-    public FebsResponse logList(Log log, QueryRequest request) {
-        Map<String, Object> dataTable = FebsUtil.getDataTable(this.logService.findLogs(log, request));
-        return new FebsResponse().data(dataTable);
+    public NebsResponse logList(Log log, QueryRequest request) {
+        Map<String, Object> dataTable = NebsUtil.getDataTable(this.logService.findLogs(log, request));
+        return new NebsResponse().data(dataTable);
     }
 
     @DeleteMapping("{ids}")

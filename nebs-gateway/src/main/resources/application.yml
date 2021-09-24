@@ -5,16 +5,17 @@ spring:
   application:
     name: NEBS-GATEWAY
   autoconfigure:
-    exclude: org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+    exclude: org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration,
+                    org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration
   boot:
     admin:
       client:
-        url: http://localhost:8401
+        url: http://${nebs-monitor-admin}:8401
         username: nebs
         password: 123456
       instance:
         prefer-ip: true
-        service-url: http://localhost:8301
+        service-url: http://${nebs-gateway}:8301
 info:
   app:
     name: ${spring.application.name}
@@ -37,7 +38,7 @@ eureka:
     instance-info-replication-interval-seconds: 30
     registry-fetch-interval-seconds: 3
     serviceUrl:
-      defaultZone: http://nebs:123456@localhost:8001/register/eureka/
+      defaultZone: http://nebs:123456@${nebs-register}:8001/register/eureka/
 zuul:
   SendErrorFilter: #让默认的异常过滤器失效，使用自定义异常过滤器
     error:

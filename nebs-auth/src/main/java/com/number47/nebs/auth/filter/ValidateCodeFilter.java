@@ -2,6 +2,7 @@ package com.number47.nebs.auth.filter;
 
 import com.number47.nebs.auth.service.ValidateCodeService;
 import entity.NebsResponse;
+import entity.constant.EndpointConstant;
 import exception.ValidateCodeException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -49,7 +50,7 @@ public class ValidateCodeFilter extends OncePerRequestFilter {
 		String header = httpServletRequest.getHeader("Authorization");
 		String clientId = getClientId(header, httpServletRequest);
 
-		RequestMatcher matcher = new AntPathRequestMatcher("/oauth/token", HttpMethod.POST.toString());
+		RequestMatcher matcher = new AntPathRequestMatcher(EndpointConstant.OAUTH_TOKEN, HttpMethod.POST.toString());
 		if (matcher.matches(httpServletRequest)
 				&& StringUtils.equalsIgnoreCase(httpServletRequest.getParameter("grant_type"), "password")
 				&& !StringUtils.equalsAnyIgnoreCase(clientId, "swagger")) {

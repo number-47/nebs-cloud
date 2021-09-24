@@ -21,4 +21,6 @@ public class NebsServerSystemProperties {
 	private String anonUrl;
 
 	private NebsSwaggerProperties swagger = new NebsSwaggerProperties();
+
+	private Integer batchInsertMaxNum;
 }

@@ -1,17 +1,16 @@
-package cc.mrbird.febs.server.system.controller;
+package com.number47.nebs.server.system.controller;
 
-import cc.mrbird.febs.common.annotation.ControllerEndpoint;
-import cc.mrbird.febs.common.entity.FebsResponse;
-import cc.mrbird.febs.common.entity.QueryRequest;
-import cc.mrbird.febs.common.entity.system.Column;
-import cc.mrbird.febs.common.entity.system.GeneratorConfig;
-import cc.mrbird.febs.common.entity.constant.GeneratorConstant;
-import cc.mrbird.febs.common.exception.FebsException;
-import cc.mrbird.febs.common.utils.FebsUtil;
-import cc.mrbird.febs.common.utils.FileUtil;
-import cc.mrbird.febs.server.system.helper.GeneratorHelper;
-import cc.mrbird.febs.server.system.service.IGeneratorConfigService;
-import cc.mrbird.febs.server.system.service.IGeneratorService;
+
+import annotation.ControllerEndpoint;
+import com.number47.nebs.common.entity.constant.GeneratorConstant;
+import entity.system.Column;
+import com.number47.nebs.server.system.helper.GeneratorHelper;
+import com.number47.nebs.server.system.service.IGeneratorConfigService;
+import com.number47.nebs.server.system.service.IGeneratorService;
+import entity.NebsResponse;
+import entity.QueryRequest;
+import entity.system.GeneratorConfig;
+import exception.NebsException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RegExUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -21,6 +20,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import util.FileUtil;
+import util.NebsUtil;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.constraints.NotBlank;
@@ -46,9 +47,9 @@ public class GeneratorController {
 
     @GetMapping("tables")
     @PreAuthorize("hasAuthority('gen:generate')")
-    public FebsResponse tablesInfo(String tableName, QueryRequest request) {
-        Map<String, Object> dataTable = FebsUtil.getDataTable(generatorService.getTables(tableName, request, GeneratorConstant.DATABASE_TYPE, GeneratorConstant.DATABASE_NAME));
-        return new FebsResponse().data(dataTable);
+    public NebsResponse tablesInfo(String tableName, QueryRequest request) {
+        Map<String, Object> dataTable = NebsUtil.getDataTable(generatorService.getTables(tableName, request, GeneratorConstant.DATABASE_TYPE, GeneratorConstant.DATABASE_NAME));
+        return new NebsResponse().data(dataTable);
     }
 
     @PostMapping
@@ -57,7 +58,7 @@ public class GeneratorController {
     public void generate(@NotBlank(message = "{required}") String name, String remark, HttpServletResponse response) throws Exception {
         GeneratorConfig generatorConfig = generatorConfigService.findGeneratorConfig();
         if (generatorConfig == null) {
-            throw new FebsException("代码生成配置为空");
+            throw new NebsException("代码生成配置为空");
         }
 
         String className = name;
@@ -66,7 +67,7 @@ public class GeneratorController {
         }
 
         generatorConfig.setTableName(name);
-        generatorConfig.setClassName(FebsUtil.underscoreToCamel(className));
+        generatorConfig.setClassName(NebsUtil.underscoreToCamel(className));
         generatorConfig.setTableComment(remark);
         // 生成代码到临时目录
         List<Column> columns = generatorService.getColumns(GeneratorConstant.DATABASE_TYPE, GeneratorConstant.DATABASE_NAME, name);

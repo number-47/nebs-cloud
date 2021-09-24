@@ -1,4 +1,4 @@
-package cc.mrbird.febs.common.entity.system;
+package entity.system;
 
 import lombok.Data;
 

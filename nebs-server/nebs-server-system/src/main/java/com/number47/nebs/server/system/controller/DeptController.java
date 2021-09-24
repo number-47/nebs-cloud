@@ -1,17 +1,23 @@
-package cc.mrbird.febs.server.system.controller;
+package com.number47.nebs.server.system.controller;
 
-import cc.mrbird.febs.common.annotation.ControllerEndpoint;
-import cc.mrbird.febs.common.entity.FebsResponse;
-import cc.mrbird.febs.common.entity.QueryRequest;
-import cc.mrbird.febs.common.entity.system.Dept;
-import cc.mrbird.febs.server.system.service.IDeptService;
+import annotation.ControllerEndpoint;
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
+import com.number47.nebs.server.system.service.IDeptService;
 import com.wuwenze.poi.ExcelKit;
+import entity.NebsResponse;
+import entity.QueryRequest;
+import entity.system.Dept;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
@@ -29,9 +35,9 @@ public class DeptController {
     private IDeptService deptService;
 
     @GetMapping
-    public FebsResponse deptList(QueryRequest request, Dept dept) {
+    public NebsResponse deptList(QueryRequest request, Dept dept) {
         Map<String, Object> depts = this.deptService.findDepts(request, dept);
-        return new FebsResponse().data(depts);
+        return new NebsResponse().data(depts);
     }
 
     @PostMapping

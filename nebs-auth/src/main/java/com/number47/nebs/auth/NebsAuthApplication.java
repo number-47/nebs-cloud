@@ -1,8 +1,6 @@
 package com.number47.nebs.auth;
 
-import annotation.EnableNebsAuthExceptionHandler;
 import annotation.EnableNebsLettuceRedis;
-import annotation.EnableNebsServerProtect;
 import annotation.NebsCloudApplication;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;

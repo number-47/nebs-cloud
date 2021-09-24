@@ -38,4 +38,12 @@ public class NebsValidateCodeProperties {
 	 * 3. 纯字母
 	 */
 	private Integer charType = 2;
+	/**
+	 * 是否使用默认验证码
+	 */
+	private Boolean useDefaultCode = false;
+	/**
+	 * 固定验证码用于调试
+	 */
+	private String defaultCode = "0000";
 }

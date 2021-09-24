@@ -11,16 +11,14 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-
-import javax.annotation.Resource;
 
 /**
  * @author number47
  * @date 2019/11/20 01:45
- * @description 安全配置类  /oauth/开头的请求由NebsSecurityConfigure过滤器链处理，剩下的其他请求由NebsResourceServerConfigurer过滤器链处理。
+ * @description 安全配置类  /oauth/开头的请求由NebsSecurityConfigure过滤器链处理，
+ * 剩下的其他请求由NebsResourceServerConfigurer过滤器链处理。
  */
 @Order(2)
 @EnableWebSecurity

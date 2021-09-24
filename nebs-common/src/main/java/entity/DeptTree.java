@@ -1,6 +1,7 @@
-package cc.mrbird.febs.common.entity;
+package entity;
 
-import cc.mrbird.febs.common.entity.system.Dept;
+
+import entity.system.Dept;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

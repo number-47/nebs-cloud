@@ -1,7 +1,7 @@
-package cc.mrbird.febs.common.utils;
+package util;
 
-import cc.mrbird.febs.common.entity.constant.FebsConstant;
 import com.google.common.base.Preconditions;
+import entity.constant.NebsConstant;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -64,9 +64,9 @@ public class FileUtil {
         if (!fileTypeIsValid(fileType)) {
             throw new Exception("暂不支持该类型文件下载");
         }
-        response.setHeader(HttpHeaders.CONTENT_DISPOSITION, "attachment;fileName=" + java.net.URLEncoder.encode(fileName, FebsConstant.UTF8));
+        response.setHeader(HttpHeaders.CONTENT_DISPOSITION, "attachment;fileName=" + java.net.URLEncoder.encode(fileName, NebsConstant.UTF8));
         response.setContentType(MediaType.MULTIPART_FORM_DATA_VALUE);
-        response.setCharacterEncoding(FebsConstant.UTF8);
+        response.setCharacterEncoding(NebsConstant.UTF8);
         try (InputStream inputStream = new FileInputStream(file); OutputStream os = response.getOutputStream()) {
             byte[] b = new byte[2048];
             int length;
@@ -112,7 +112,7 @@ public class FileUtil {
 
     /**
      * 校验文件类型是否是允许下载的类型
-     * （出于安全考虑：https://github.com/wuyouzhuguli/FEBS-Shiro/issues/40）
+     * （出于安全考虑：https://github.com/wuyouzhuguli/nebs-Shiro/issues/40）
      *
      * @param fileType fileType
      * @return Boolean
@@ -120,7 +120,7 @@ public class FileUtil {
     private static Boolean fileTypeIsValid(String fileType) {
         Preconditions.checkNotNull(fileType);
         fileType = StringUtils.lowerCase(fileType);
-        return ArrayUtils.contains(FebsConstant.VALID_FILE_TYPE, fileType);
+        return ArrayUtils.contains(NebsConstant.VALID_FILE_TYPE, fileType);
     }
 
     private static void compress(File file, ZipOutputStream zipOut, String baseDir) throws IOException {

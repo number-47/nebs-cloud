@@ -1,10 +1,11 @@
-package cc.mrbird.febs.server.system.controller;
+package com.number47.nebs.server.system.controller;
 
-import cc.mrbird.febs.common.annotation.ControllerEndpoint;
-import cc.mrbird.febs.common.entity.FebsResponse;
-import cc.mrbird.febs.common.entity.system.GeneratorConfig;
-import cc.mrbird.febs.common.exception.FebsException;
-import cc.mrbird.febs.server.system.service.IGeneratorConfigService;
+
+import annotation.ControllerEndpoint;
+import com.number47.nebs.server.system.service.IGeneratorConfigService;
+import entity.NebsResponse;
+import entity.system.GeneratorConfig;
+import exception.NebsException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,16 +30,16 @@ public class GeneratorConfigController {
 
     @GetMapping
     @PreAuthorize("hasAuthority('gen:config')")
-    public FebsResponse getGeneratorConfig() {
-        return new FebsResponse().data(generatorConfigService.findGeneratorConfig());
+    public NebsResponse getGeneratorConfig() {
+        return new NebsResponse().data(generatorConfigService.findGeneratorConfig());
     }
 
     @PostMapping
     @PreAuthorize("hasAuthority('gen:config:update')")
     @ControllerEndpoint(operation = "修改生成代码配置", exceptionMessage = "修改GeneratorConfig失败")
-    public void updateGeneratorConfig(@Valid GeneratorConfig generatorConfig) throws FebsException {
+    public void updateGeneratorConfig(@Valid GeneratorConfig generatorConfig) throws NebsException {
         if (StringUtils.isBlank(generatorConfig.getId()))
-            throw new FebsException("配置id不能为空");
+            throw new NebsException("配置id不能为空");
         this.generatorConfigService.updateGeneratorConfig(generatorConfig);
     }
 }

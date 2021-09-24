@@ -24,7 +24,7 @@ public class StartedUpRunner implements ApplicationRunner {
 	@Autowired
 	private ConfigurableApplicationContext context;
 
-	@Value("${spring.application.name:'FEBS-Monitor-Admin'}")
+	@Value("${spring.application.name:'NEBS-Monitor-Admin'}")
 	private String applicationName;
 
 	@Override

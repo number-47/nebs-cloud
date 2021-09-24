@@ -1,4 +1,4 @@
-package cc.mrbird.febs.server.system.aspect;
+package com.number47.nebs.server.system.aspect;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.reflect.MethodSignature;

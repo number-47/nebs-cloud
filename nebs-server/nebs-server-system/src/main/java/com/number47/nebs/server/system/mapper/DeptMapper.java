@@ -1,7 +1,8 @@
-package cc.mrbird.febs.server.system.mapper;
+package com.number47.nebs.server.system.mapper;
 
-import cc.mrbird.febs.common.entity.system.Dept;
+
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import entity.system.Dept;
 
 public interface DeptMapper extends BaseMapper<Dept> {
 
