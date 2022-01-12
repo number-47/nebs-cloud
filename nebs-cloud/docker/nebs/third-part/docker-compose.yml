@@ -1,0 +1,49 @@
+version: '3'
+
+services:
+  mysql:
+    image: mysql:5.7.24
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456
+    ports:
+      - 3306:3306
+    volumes:
+      - /nebs/mysql/data:/var/lib/mysql #挂载 MySQL数据
+      - /nebs/sql/:/home/sql/
+  redis:
+    image: redis:4.0.14
+    container_name: redis
+    command: redis-server /usr/local/etc/redis/redis.conf --appendonly yes
+    volumes:
+      - /nebs/redis/data:/data #挂载 Redis数据
+      - /nebs/redis/conf/redis.conf:/usr/local/etc/redis/redis.conf #挂载 Redis配置
+    ports:
+      - 6379:6379
+  rabbitmq:
+    image: rabbitmq:3.7.15-management
+    container_name: rabbitmq
+    volumes:
+      - /nebs/rabbitmq/data:/var/lib/rabbitmq #挂载 RabbitMQ数据
+      - /nebs/rabbitmq/log:/var/log/rabbitmq #挂载 RabbitMQ日志
+    ports:
+      - 5672:5672
+      - 15672:15672
+  nacos:
+    image: nacos/nacos-server:1.3.0
+    container_name: nacos-standalone-mysql
+    env_file:
+      - /nebs/third-part/nacos/env/nacos-standlone-mysql.env
+    volumes:
+      - /nebs/third-part/nacos/standalone-logs/:/home/nacos/logs
+      - /nebs/third-part/nacos/conf/application.properties:/home/nacos/conf/application.properties
+      - /nebs/third-part/nacos/init.d/custom.properties:/home/nacos/init.d/custom.properties
+    ports:
+      - "8001:8001"
+    restart: always
+  #配置和mysql容器互通的网络net-docker
+networks: 
+  default:
+    external:
+      name: third-part_default
+

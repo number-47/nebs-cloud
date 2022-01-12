@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: NEBS-SERVER-SYSTEM
+  cloud:
+    nacos:
+      discovery:
+        server-addr: ${nacos.url}:8001
+      config:
+        server-addr: ${nacos.url}:8001
+        group: DEFAULT_GROUP
+        prefix: nebs-server-system
+        file-extension: yaml
+logging:
+  level:
+    com.alibaba.nacos.client: error

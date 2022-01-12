@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: NEBS-AUTH
+  cloud:
+    nacos:
+      discovery:
+        server-addr: ${nacos.url}:8001
+      config:
+        server-addr: ${nacos.url}:8001
+        group: DEFAULT_GROUP
+        prefix: nebs-auth
+        file-extension: yaml
+logging:
+  level:
+    com.alibaba.nacos.client: error
+    org.springframework.web: DEBUG
+    com.github.binarywang.demo.wx.open: DEBUG

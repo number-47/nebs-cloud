@@ -11,7 +11,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-@EnableDiscoveryClient
+//@EnableDiscoveryClient nacos不需要这个
 @SpringBootApplication
 @NebsCloudApplication
 //@EnableNebsOauth2FeignClient

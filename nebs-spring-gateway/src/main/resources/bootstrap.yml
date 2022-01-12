@@ -1,0 +1,17 @@
+server:
+  port: 8101
+spring:
+  application:
+    name: NEBS-SPRING-GATEWAY
+  cloud:
+    nacos:
+      discovery:
+        server-addr: ${nacos.url}:8001
+      config:
+        server-addr: ${nacos.url}:8001
+        group: DEFAULT_GROUP
+        prefix: nebs-spring-gateway
+        file-extension: yaml
+logging:
+  level:
+    com.alibaba.nacos.client: error

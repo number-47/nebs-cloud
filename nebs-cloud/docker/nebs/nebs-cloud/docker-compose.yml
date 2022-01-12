@@ -1,0 +1,85 @@
+version: '3'
+
+services:
+  nebs-register:
+    image: nebs-register:latest # 指定基础镜像，就是上一节中我们自己构建的镜像
+    container_name: nebs-register # 容器名称
+    volumes:
+      - "/nebs/log:/log" #日志挂载
+    command:
+      - "--nebs-register=192.168.33.10" # 通过command指定地址变量值
+      - "--nebs-monitor-admin=192.168.33.10"
+    ports:
+      - 8001:8001 # 端口映射
+  nebs-monitor-admin:
+    image: nebs-monitor-admin:latest
+    container_name: nebs-monitor-admin
+    volumes:
+      - "/nebs/log:/log"
+    ports:
+      - 8401:8401
+  nebs-gateway:
+    image: nebs-gateway:latest
+    container_name: nebs-gateway
+    depends_on:
+      - nebs-register
+    volumes:
+      - "/nebs/log:/log"
+    command:
+      - "--nebs-register=192.168.33.10"
+      - "--nebs-monitor-admin=192.168.33.10"
+    ports:
+      - 8301:8301
+  nebs-auth:
+    image: nebs-auth:latest
+    container_name: nebs-auth
+    depends_on:
+      - nebs-register
+    volumes:
+      - "/nebs/log:/log"
+    command:
+      - "--mysql.url=192.168.33.10"
+      - "--redis.url=192.168.33.10"
+      - "--nebs-register=192.168.33.10"
+      - "--nebs-monitor-admin=192.168.33.10"
+  nebs-server-system:
+    image: nebs-server-system:latest
+    container_name: nebs-server-system
+    depends_on:
+      - nebs-register
+    volumes:
+      - "/nebs/log:/log"
+    command:
+      - "--mysql.url=192.168.33.10"
+      - "--rabbitmq.url=192.168.33.10"
+      - "--nebs-register=192.168.33.10"
+      - "--nebs-monitor-admin=192.168.33.10"
+      - "--nebs-gateway=192.168.33.10"
+  nebs-server-test:
+    image: nebs-server-test:latest
+    container_name: nebs-server-test
+    depends_on:
+      - nebs-register
+    volumes:
+      - "/nebs/log:/log"
+    command:
+      - "--rabbitmq.url=192.168.33.10"
+      - "--nebs-register=192.168.33.10"
+      - "--nebs-monitor-admin=192.168.33.10"
+      - "--nebs-gateway=192.168.33.10"
+  zipkin-server:
+    image: zipkin-server
+    container_name: zipkin-server
+    command:
+      - "--server.port=8402"
+      - "--zipkin.storage.type=mysql"
+      - "--zipkin.storage.mysql.db=nebs_cloud_base"
+      - "--zipkin.storage.mysql.username=root"
+      - "--zipkin.storage.mysql.password=123456"
+      - "--zipkin.storage.mysql.host=192.168.33.10"
+      - "--zipkin.storage.mysql.port=3306"
+      - "--zipkin.collector.rabbitmq.addresses=192.168.33.10:5672"
+      - "--zipkin.collector.rabbitmq.username=nebs"
+      - "--zipkin.collector.rabbitmq.password=123456"
+    ports:
+      - 8402:8402
