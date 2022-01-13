@@ -14,7 +14,8 @@
  Date: 14/01/2020 11:04:22
 */
 
-
+CREATE DATABASE IF NOT EXISTS nebs_cloud_job;
+use nebs_cloud_job;
 // ----------------------------
 // Collection structure for blackList
 // ----------------------------

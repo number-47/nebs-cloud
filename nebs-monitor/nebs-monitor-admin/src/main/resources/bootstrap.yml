@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: NEBS-MONITOR-ADMIN
+  cloud:
+    nacos:
+      config:
+        server-addr: ${nacos.url}:8001
+        group: DEFAULT_GROUP
+        prefix: nebs-monitor-admin
+        file-extension: yaml
+logging:
+  level:
+    com.alibaba.nacos.client: error

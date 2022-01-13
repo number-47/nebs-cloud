@@ -12,7 +12,6 @@
     <modules>
         <module>nebs-server-system</module>
         <module>nebs-server-test</module>
-        <module>nebs-server-generator</module>
     </modules>
 
     <modelVersion>4.0.0</modelVersion>
@@ -41,7 +40,7 @@
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>dynamic-datasource-spring-boot-starter</artifactId>
-            <version>2.5.4</version>
+            <version>2.5.7</version>
         </dependency>
         <dependency>
             <groupId>p6spy</groupId>
@@ -70,5 +69,10 @@
             <artifactId>spring-rabbit</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>xml-apis</groupId>
+            <artifactId>xml-apis</artifactId>
+            <version>1.4.01</version>
+        </dependency>
     </dependencies>
 </project>

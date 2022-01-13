@@ -1,17 +1,13 @@
 package com.number47.nebs.server.test;
 
-import annotation.EnableNebsAuthExceptionHandler;
-import annotation.EnableNebsOauth2FeignClient;
-import annotation.EnableNebsServerProtect;
 import annotation.NebsCloudApplication;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 
 @EnableFeignClients
-@EnableDiscoveryClient
+//@EnableDiscoveryClient nacos不需要这个
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @NebsCloudApplication  //代替下面三个注解
 //@EnableNebsAuthExceptionHandler //认证类型异常翻译
