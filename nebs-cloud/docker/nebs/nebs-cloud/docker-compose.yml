@@ -1,31 +1,25 @@
 version: '3'
 
 services:
-  nebs-register:
-    image: nebs-register:latest # 指定基础镜像，就是上一节中我们自己构建的镜像
-    container_name: nebs-register # 容器名称
-    volumes:
-      - "/nebs/log:/log" #日志挂载
-    command:
-      - "--nebs-register=192.168.33.10" # 通过command指定地址变量值
-      - "--nebs-monitor-admin=192.168.33.10"
-    ports:
-      - 8001:8001 # 端口映射
   nebs-monitor-admin:
     image: nebs-monitor-admin:latest
     container_name: nebs-monitor-admin
     volumes:
       - "/nebs/log:/log"
+    command:
+      - "--nacos.url=192.168.33.10"
+      - "--nebs-monitor-admin=192.168.33.10"
     ports:
       - 8401:8401
-  nebs-gateway:
-    image: nebs-gateway:latest
-    container_name: nebs-gateway
-    depends_on:
-      - nebs-register
+  nebs-spring-gateway:
+    image: nebs-spring-gateway:latest
+    container_name: nebs-spring-gateway
     volumes:
       - "/nebs/log:/log"
     command:
+      - "--mysql.url=192.168.33.10"
+      - "--nacos.url=192.168.33.10"
+      - "--redis.url=192.168.33.10"
       - "--nebs-register=192.168.33.10"
       - "--nebs-monitor-admin=192.168.33.10"
     ports:
@@ -33,40 +27,45 @@ services:
   nebs-auth:
     image: nebs-auth:latest
     container_name: nebs-auth
-    depends_on:
-      - nebs-register
     volumes:
       - "/nebs/log:/log"
     command:
       - "--mysql.url=192.168.33.10"
+      - "--nacos.url=192.168.33.10"
       - "--redis.url=192.168.33.10"
       - "--nebs-register=192.168.33.10"
       - "--nebs-monitor-admin=192.168.33.10"
+    ports:
+      - 8101:8101
   nebs-server-system:
     image: nebs-server-system:latest
     container_name: nebs-server-system
-    depends_on:
-      - nebs-register
     volumes:
       - "/nebs/log:/log"
     command:
       - "--mysql.url=192.168.33.10"
+      - "--nacos.url=192.168.33.10"
       - "--rabbitmq.url=192.168.33.10"
       - "--nebs-register=192.168.33.10"
       - "--nebs-monitor-admin=192.168.33.10"
       - "--nebs-gateway=192.168.33.10"
+      - "--nebs-server-system=192.168.33.10"
+      - "--nebs-gateway=192.168.33.10"
+    ports:
+      - 8201:8201
   nebs-server-test:
     image: nebs-server-test:latest
     container_name: nebs-server-test
-    depends_on:
-      - nebs-register
     volumes:
       - "/nebs/log:/log"
     command:
+      - "--nacos.url=192.168.33.10"
       - "--rabbitmq.url=192.168.33.10"
       - "--nebs-register=192.168.33.10"
       - "--nebs-monitor-admin=192.168.33.10"
       - "--nebs-gateway=192.168.33.10"
+    ports:
+      - 8202:8202
   zipkin-server:
     image: zipkin-server
     container_name: zipkin-server
